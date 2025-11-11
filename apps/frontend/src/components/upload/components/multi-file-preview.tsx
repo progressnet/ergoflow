@@ -148,9 +148,9 @@ function getFileThumbnailFile(file: File | string | FileMetadata): File | string
   if (file instanceof File || typeof file === 'string') {
     return file;
   }
-  // For FileMetadata, we'll pass the URL as a string
+  // Map FileMetadata to a string that preserves type/format detection in FileThumbnail
   const metadata = file as FileMetadata;
-  return metadata.signedUrl || metadata.url || null;
+  return metadata.mimetype || metadata.filename || metadata.url || null;
 }
 
 export function MultiFilePreview({

@@ -13,11 +13,11 @@ import { enUS as enUSDataGrid, elGR as elGRDataGrid } from '@mui/x-data-grid/loc
 // ----------------------------------------------------------------------
 
 // Supported languages
-export const supportedLngs = ['en', 'el'] as const;
+export const supportedLngs = ['el', 'en'] as const;
 export type LangCode = (typeof supportedLngs)[number];
 
 // Fallback and default namespace
-export const fallbackLng: LangCode = 'en';
+export const fallbackLng: LangCode = 'el';
 export const defaultNS = 'common';
 
 // Available namespaces
@@ -56,16 +56,6 @@ export type LangOption = {
 
 export const allLangs: LangOption[] = [
   {
-    value: 'en',
-    label: 'English',
-    countryCode: 'GB',
-    adapterLocale: 'en',
-    numberFormat: { code: 'en-US', currency: 'EUR' },
-    systemValue: {
-      components: { ...enUSDate.components, ...enUSDataGrid.components } as any,
-    },
-  },
-  {
     value: 'el',
     label: 'Greek',
     countryCode: 'GR',
@@ -73,6 +63,16 @@ export const allLangs: LangOption[] = [
     numberFormat: { code: 'el-GR', currency: 'EUR' },
     systemValue: {
       components: { ...elGRCore.components, ...elGRDataGrid.components },
+    },
+  },
+  {
+    value: 'en',
+    label: 'English',
+    countryCode: 'GB',
+    adapterLocale: 'en',
+    numberFormat: { code: 'en-US', currency: 'EUR' },
+    systemValue: {
+      components: { ...enUSDate.components, ...enUSDataGrid.components } as any,
     },
   },
 ];

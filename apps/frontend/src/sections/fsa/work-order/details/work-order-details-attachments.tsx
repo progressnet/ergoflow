@@ -22,7 +22,7 @@ import {useAuthContext} from 'src/auth/hooks/use-auth-context';
 type Attachment = {
   name: string;
   url: string;
-  type: string;
+  mimetype: string; // Changed from 'type' to 'mimetype' for consistency with FileMetadata
   size: number;
   filename?: string; // Backend filename for signed URL generation
 };
@@ -120,7 +120,7 @@ export function WorkOrderDetailsAttachments({ attachments, workOrderId }: Props)
               attachment: {
                 name: filename,
                 url: taskAtt,
-                type: mimetype,
+                mimetype, // Use 'mimetype' instead of 'type' for consistency
                 size: 0, // Size not available for task attachments
                 filename: extracted?.filename, // Add filename for signed URL generation
               },
@@ -135,7 +135,7 @@ export function WorkOrderDetailsAttachments({ attachments, workOrderId }: Props)
               attachment: {
                 name: taskAtt.originalName || taskAtt.name || taskAtt.filename,
                 url: taskAtt.url,
-                type: taskAtt.mimetype || taskAtt.type || 'application/octet-stream',
+                mimetype: taskAtt.mimetype || taskAtt.type || 'application/octet-stream', // Use 'mimetype' consistently
                 size: taskAtt.size || 0,
               },
             });
@@ -159,7 +159,7 @@ export function WorkOrderDetailsAttachments({ attachments, workOrderId }: Props)
                 attachment: {
                   name: subtaskAtt.originalName || subtaskAtt.filename || subtaskAtt.name,
                   url,
-                  type: subtaskAtt.mimetype || subtaskAtt.type || 'application/octet-stream',
+                  mimetype: subtaskAtt.mimetype || subtaskAtt.type || 'application/octet-stream', // Use 'mimetype' consistently
                   size: subtaskAtt.size || 0,
                 },
               });
@@ -200,7 +200,7 @@ export function WorkOrderDetailsAttachments({ attachments, workOrderId }: Props)
         originalName: item.attachment.name,
         url: item.attachment.url,
         size: item.attachment.size,
-        mimetype: item.attachment.type,
+        mimetype: item.attachment.mimetype, // Use mimetype consistently
         scope,
         ownerId,
         tenantId: extracted?.tenantId || tenantId, // Use extracted tenantId if available

@@ -13,8 +13,10 @@ export function isOldTokenUrl(url?: string): boolean {
 }
 
 /**
- * Extracts file metadata from old token-based URLs
- * Example: /api/v1/uploads/tenantId/scope/ownerId/filename.jpg?token=xxx
+ * Extracts file metadata from URLs (both old token-based and new signed URLs)
+ * Examples:
+ * - Old: /api/v1/uploads/tenantId/scope/ownerId/filename.jpg?token=xxx
+ * - New: /api/v1/files/secure/eyJ0ZW5hbnRJZCI6...
  */
 export function extractFileMetadataFromUrl(url: string): {
   filename: string;
@@ -26,11 +28,40 @@ export function extractFileMetadataFromUrl(url: string): {
     // Remove query parameters
     const urlWithoutQuery = url.split('?')[0];
 
+    // Check if it's a signed URL format: /api/v1/files/secure/{token}
+    if (urlWithoutQuery.includes('/files/secure/')) {
+      const pathParts = urlWithoutQuery.split('/');
+      const secureIndex = pathParts.indexOf('secure');
+
+      if (secureIndex !== -1 && pathParts.length > secureIndex + 1) {
+        // Extract the token (everything after 'secure/')
+        const token = pathParts.slice(secureIndex + 1).join('/');
+
+        try {
+          // Decode the base64 payload (first part before the signature)
+          const [payloadBase64] = token.split('.');
+          if (payloadBase64) {
+            const payloadJson = atob(payloadBase64.replace(/-/g, '+').replace(/_/g, '/'));
+            const payload = JSON.parse(payloadJson);
+
+            return {
+              filename: payload.filename,
+              scope: payload.scope,
+              ownerId: payload.ownerId,
+              tenantId: payload.tenantId,
+            };
+          }
+        } catch (decodeError) {
+          console.error('Failed to decode signed URL token:', decodeError);
+          return null;
+        }
+      }
+    }
+
     // Extract path parts: /api/v1/uploads/{tenantId}/{scope}/{ownerId}/{filename}
     const pathParts = urlWithoutQuery.split('/');
-
-    // Find the uploads index
     const uploadsIndex = pathParts.indexOf('uploads');
+
     if (uploadsIndex === -1 || pathParts.length < uploadsIndex + 5) {
       return null;
     }

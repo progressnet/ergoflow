@@ -186,10 +186,12 @@ export async function secureFilesRoutes(fastify: FastifyInstance) {
    * GET /api/v1/files/secure/:token
    *
    * No authentication required - security is provided by the signature
+   * Note: Using wildcard (*) to capture tokens with periods (signature separator)
    */
-  fastify.get("/secure/:token", async (request, reply) => {
+  fastify.get("/secure/*", async (request, reply) => {
     const params = request.params as any;
-    const { token } = params;
+    // Extract token from wildcard parameter
+    const token = params['*'];
 
     // Verify signature
     const verified = SignedUrlService.verifySignedUrl(token);
@@ -326,8 +328,9 @@ export async function secureFilesRoutes(fastify: FastifyInstance) {
 
   /**
    * OPTIONS handler for CORS preflight
+   * Note: Using wildcard (*) to match tokens with periods
    */
-  fastify.options("/secure/:token", async (request, reply) => {
+  fastify.options("/secure/*", async (request, reply) => {
     const origin = request.headers.origin;
     if (origin) {
       if (
