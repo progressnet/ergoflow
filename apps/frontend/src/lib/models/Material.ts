@@ -1,9 +1,9 @@
-import type { Document } from 'mongoose';
+import type { Types, Document } from 'mongoose';
 
 // ----------------------------------------------------------------------
 
 export interface IMaterial extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   tenantId: string;
   name: string;
   description?: string;

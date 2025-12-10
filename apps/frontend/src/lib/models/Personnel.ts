@@ -1,4 +1,4 @@
-import type { Document } from 'mongoose';
+import type { Document, Types } from 'mongoose';
 import type { IRole } from './Role';
 import type { ITenant } from './Tenant';
 
@@ -7,7 +7,7 @@ import mongoose, { Schema } from 'mongoose';
 // ----------------------------------------------------------------------
 
 export interface IPersonnel extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   tenantId: mongoose.Types.ObjectId | ITenant;
   userId: mongoose.Types.ObjectId;
   employeeId: string;

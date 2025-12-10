@@ -1,9 +1,9 @@
-import type { Document } from 'mongoose';
+import type { Types, Document } from 'mongoose';
 
 import mongoose, { Schema } from 'mongoose';
 
 export interface ICertification extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   tenantId: mongoose.Types.ObjectId;
   name: string;
   description?: string;

@@ -219,7 +219,7 @@ export function MaterialsList({ filters, onFilters, onImport, onCreate }: Materi
               onSelectAllRows={(checked) =>
                 table.onSelectAllRows(
                   checked,
-                  dataFiltered.map((row) => row._id)
+                  dataFiltered.map((row) => String(row._id))
                 )
               }
             />
@@ -244,10 +244,10 @@ export function MaterialsList({ filters, onFilters, onImport, onCreate }: Materi
               ) : (
                 dataFiltered.map((row) => (
                   <MaterialsTableRow
-                    key={row._id}
+                    key={String(row._id)}
                     row={row}
-                    selected={table.selected.includes(row._id)}
-                    onSelectRow={() => handleSelectRow(row._id)}
+                    selected={table.selected.includes(String(row._id))}
+                    onSelectRow={() => handleSelectRow(String(row._id))}
                     onEdit={() => handleEditMaterial(row)}
                   />
                 ))

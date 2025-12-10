@@ -123,7 +123,7 @@ export function MaterialsQuickEditForm({ open, onClose, material }: MaterialsQui
       const { customFieldKey: _key, customFieldValue: _value, ...updateData } = data;
       updateData.customFields = customFields;
 
-      await MaterialService.updateMaterial(material._id, updateData);
+      await MaterialService.updateMaterial(String(material._id), updateData);
       toast.success(t('materials.materialUpdated'));
       onClose();
       // You might want to trigger a refresh of the materials list here
@@ -160,7 +160,7 @@ export function MaterialsQuickEditForm({ open, onClose, material }: MaterialsQui
   const handleToggleActive = async () => {
     setLoading(true);
     try {
-      await MaterialService.toggleMaterialActive(material._id);
+      await MaterialService.toggleMaterialActive(String(material._id));
       toast.success(t(`materials.material${material.isActive ? 'Deactivated' : 'Activated'}`));
       onClose();
     } catch (error) {
@@ -177,7 +177,7 @@ export function MaterialsQuickEditForm({ open, onClose, material }: MaterialsQui
   const handleConfirmDelete = async () => {
     setLoading(true);
     try {
-      await MaterialService.deleteMaterial(material._id);
+      await MaterialService.deleteMaterial(String(material._id));
       toast.success(t('materials.materialDeleted'));
       setDeleteConfirmOpen(false);
       onClose();

@@ -37,9 +37,10 @@ export function applySettingsToTheme(
 
   const updateColorScheme = (schemeName: ThemeColorScheme) => {
     const currentScheme = theme.colorSchemes?.[schemeName];
+    const scheme = currentScheme ?? ({} as NonNullable<typeof currentScheme>);
 
     const updatedPalette = {
-      ...currentScheme?.palette,
+      ...scheme.palette,
       ...(!isDefaultPrimaryColor && {
         primary: primaryColorPalette,
         // secondary: secondaryColorPalette,
@@ -56,7 +57,7 @@ export function applySettingsToTheme(
     };
 
     const updatedCustomShadows = {
-      ...currentScheme?.customShadows,
+      ...scheme.customShadows,
       ...(!isDefaultPrimaryColor && {
         primary: createShadowColor(primaryColorPalette.mainChannel),
         // secondary: createShadowColor(secondaryColorPalette.mainChannel),
@@ -64,7 +65,7 @@ export function applySettingsToTheme(
     };
 
     return {
-      ...currentScheme,
+      ...(scheme as object),
       palette: updatedPalette,
       customShadows: updatedCustomShadows,
     };

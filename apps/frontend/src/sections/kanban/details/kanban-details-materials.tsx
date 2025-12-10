@@ -98,7 +98,7 @@ function AddMaterialDialog({ open, onClose, onAdd }: AddMaterialDialogProps) {
 
   const handleAdd = () => {
     if (selectedMaterial && quantity > 0) {
-      onAdd(selectedMaterial._id, quantity);
+      onAdd(String(selectedMaterial._id), quantity);
       setSelectedMaterial(null);
       setQuantity(1);
       setSearchTerm('');

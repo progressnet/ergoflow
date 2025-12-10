@@ -1,11 +1,11 @@
-import type { Document } from 'mongoose';
+import type { Types, Document } from 'mongoose';
 
 import mongoose, { Schema } from 'mongoose';
 
 // ----------------------------------------------------------------------
 
 export interface ITask extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   tenantId: string;
   title: string;
   description?: string;

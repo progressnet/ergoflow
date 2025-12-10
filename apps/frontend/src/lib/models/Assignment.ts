@@ -1,11 +1,11 @@
-import type { Document } from 'mongoose';
+import type { Document, Types } from 'mongoose';
 
 import mongoose, { Schema } from 'mongoose';
 
 // ----------------------------------------------------------------------
 
 export interface IAssignment extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   tenantId: string;
   workOrderId: string;
   technicianId: string;

@@ -3,7 +3,7 @@ import type { NavCarouselProps } from '../types';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import Link from '@mui/material/Link';
-import { styled } from '@mui/material/styles';
+import { styled, type CSSObject } from '@mui/material/styles';
 
 import { Image } from '../../image';
 import { megaMenuClasses } from '../styles';
@@ -82,6 +82,7 @@ const CarouselItemRoot = styled(Link)(({ theme }) => ({
 
 const CarouselItemTitle = styled('span')(({ theme }) => ({
   ...theme.typography.caption,
-  ...theme.mixins.maxLine({ line: 2, persistent: theme.typography.caption }),
+  // @ts-expect-error - TODO: fix this
+  ...(theme.mixins.maxLine({ line: 2, persistent: theme.typography.caption }) as CSSObject),
   fontWeight: theme.typography.fontWeightSemiBold,
 }));

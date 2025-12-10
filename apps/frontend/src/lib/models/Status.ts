@@ -1,4 +1,4 @@
-import type { Document } from 'mongoose';
+import type { Types, Document } from 'mongoose';
 import type { ITenant } from './Tenant';
 
 import mongoose, { Schema } from 'mongoose';
@@ -6,7 +6,7 @@ import mongoose, { Schema } from 'mongoose';
 // ----------------------------------------------------------------------
 
 export interface IStatus extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   tenantId: mongoose.Types.ObjectId | ITenant;
   name: string;
   description?: string;
