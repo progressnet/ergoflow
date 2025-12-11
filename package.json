@@ -7,6 +7,11 @@
     "apps/frontend",
     "apps/backend"
   ],
+  "resolutions": {
+    "glob": ">=11.1.0",
+    "jws": ">=4.0.1",
+    "mdast-util-to-hast": ">=13.2.1"
+  },
   "scripts": {
     "dev": "./start-dev.sh",
     "start": "./start-dev.sh",
