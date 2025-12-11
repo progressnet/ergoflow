@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: ergoflow CI/CD Pipeline
 
 on:
   push:
@@ -13,7 +13,7 @@ env:
 jobs:
   lint-and-typecheck:
     name: Lint & Type Check
-    runs-on: production
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
