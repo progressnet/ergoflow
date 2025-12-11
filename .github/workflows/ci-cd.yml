@@ -123,9 +123,9 @@ jobs:
         run: |
           yarn install --frozen-lockfile
 
-      - name: Run npm audit
+      - name: Run yarn audit
         run: |
-          npm audit --audit-level moderate
+          yarn audit --level moderate
 
       - name: Run Snyk security scan
         uses: snyk/actions/node@master
