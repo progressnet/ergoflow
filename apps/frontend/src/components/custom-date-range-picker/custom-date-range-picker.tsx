@@ -6,7 +6,7 @@ import type { DialogProps } from '@mui/material/Dialog';
 import type { UseDateRangePickerReturn } from './use-date-range-picker';
 
 import dayjs from 'dayjs';
-import { useState, useEffect, useCallback } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Dialog from '@mui/material/Dialog';
@@ -31,6 +31,39 @@ import { DateCalendar, dateCalendarClasses } from '@mui/x-date-pickers/DateCalen
 import { useTranslate } from 'src/locales/use-locales';
 
 import { Iconify } from 'src/components/iconify';
+
+// ----------------------------------------------------------------------
+
+type TimeSelectorProps = {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  timeOptions: string[];
+};
+
+function TimeSelector({ label, value, onChange, timeOptions }: TimeSelectorProps) {
+  return (
+    <TextField
+      select
+      label={label}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      size="small"
+      slotProps={{
+        select: {
+          native: true,
+        },
+      }}
+      sx={{ minWidth: 100 }}
+    >
+      {timeOptions.map((time) => (
+        <option key={time} value={time}>
+          {time}
+        </option>
+      ))}
+    </TextField>
+  );
+}
 
 // ----------------------------------------------------------------------
 
@@ -225,7 +258,7 @@ export function CustomDateRangePicker({
   }, []);
 
   // Generate time options in 15-minute intervals
-  const timeOptions = useCallback(() => {
+  const timeOptions = useMemo(() => {
     const options = [];
     for (let hour = 0; hour < 24; hour++) {
       for (let minute = 0; minute < 60; minute += 15) {
@@ -235,39 +268,6 @@ export function CustomDateRangePicker({
     }
     return options;
   }, []);
-
-  const TimeSelector = useCallback(
-    ({
-      label,
-      value,
-      onChange,
-    }: {
-      label: string;
-      value: string;
-      onChange: (value: string) => void;
-    }) => (
-      <TextField
-        select
-        label={label}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        size="small"
-        slotProps={{
-          select: {
-            native: true,
-          },
-        }}
-        sx={{ minWidth: 100 }}
-      >
-        {timeOptions().map((time) => (
-          <option key={time} value={time}>
-            {time}
-          </option>
-        ))}
-      </TextField>
-    ),
-    [timeOptions]
-  );
 
   const dialogPaperSx = (slotProps?.paper as PaperProps)?.sx;
 
@@ -318,6 +318,7 @@ export function CustomDateRangePicker({
                     label={t('startTime', { defaultValue: 'Start time' })}
                     value={getTimeString(startDate)}
                     onChange={handleStartTimeChange}
+                    timeOptions={timeOptions}
                   />
                 </Stack>
               )}
@@ -334,6 +335,7 @@ export function CustomDateRangePicker({
                     label={t('endTime', { defaultValue: 'End time' })}
                     value={getTimeString(endDate)}
                     onChange={handleEndTimeChange}
+                    timeOptions={timeOptions}
                   />
                 </Stack>
               )}

@@ -82,7 +82,7 @@ const CarouselItemRoot = styled(Link)(({ theme }) => ({
 
 const CarouselItemTitle = styled('span')(({ theme }) => ({
   ...theme.typography.caption,
-  // @ts-expect-error - TODO: fix this
+  // @ts-expect-error - csstype version mismatch between react and MUI
   ...(theme.mixins.maxLine({ line: 2, persistent: theme.typography.caption }) as CSSObject),
   fontWeight: theme.typography.fontWeightSemiBold,
 }));

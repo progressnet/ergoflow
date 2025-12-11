@@ -1,7 +1,7 @@
 'use client';
 
 import useSWR from 'swr';
-import { useMemo, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -89,7 +89,7 @@ export function WorkOrderPersonnelDialog({
   };
 
   // Update selected when selectedPersonnel prop changes
-  useMemo(() => {
+  useEffect(() => {
     setSelected(selectedPersonnel);
   }, [selectedPersonnel]);
 
